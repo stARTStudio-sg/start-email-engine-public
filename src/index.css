@@ -1,0 +1,641 @@
+:root {
+  --background: #f8f4ed;
+  --foreground: #261b13;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.section-kicker {
+  color: #9b4d2c;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.section-title {
+  color: #261b13;
+  font-size: clamp(1.75rem, 3vw, 2.6rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  margin-top: 0.35rem;
+}
+
+.section-copy {
+  color: #6d5b4a;
+  font-size: 0.98rem;
+  line-height: 1.7;
+  margin-top: 0.75rem;
+  max-width: 48rem;
+}
+
+.field {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.field span {
+  color: #5b4939;
+  font-size: 0.84rem;
+  font-weight: 700;
+}
+
+.field input,
+.field textarea {
+  width: 100%;
+  resize: vertical;
+  border: 1px solid #d8c5b2;
+  border-radius: 8px;
+  background: #fffdf9;
+  color: #261b13;
+  line-height: 1.55;
+  outline: none;
+  padding: 0.85rem 0.95rem;
+}
+
+.field input:focus,
+.field textarea:focus,
+.draft-box:focus {
+  border-color: #9b4d2c;
+  box-shadow: 0 0 0 3px rgba(155, 77, 44, 0.14);
+}
+
+.primary-button {
+  align-items: center;
+  background: #9b4d2c;
+  border: 1px solid #9b4d2c;
+  border-radius: 8px;
+  color: #ffffff;
+  display: inline-flex;
+  font-weight: 700;
+  justify-content: center;
+  min-height: 3rem;
+  padding: 0.85rem 1.1rem;
+  transition: 160ms ease;
+}
+
+.primary-button:hover {
+  background: #7f3d20;
+  border-color: #7f3d20;
+}
+
+.result-card,
+.angle-card,
+.hook-card,
+.style-card,
+.custom-box,
+.selected-source,
+.chosen-strip {
+  border: 1px solid #ddcdbb;
+  border-radius: 8px;
+  background: #fffdf9;
+}
+
+.result-card {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  overflow: hidden;
+}
+
+.card-button {
+  display: grid;
+  flex: 1;
+  gap: 0.75rem;
+  padding: 1rem;
+  text-align: left;
+}
+
+.card-button h3,
+.angle-card h3 {
+  color: #261b13;
+  font-size: 1.05rem;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.card-button p,
+.angle-card p,
+.selected-source p {
+  color: #6d5b4a;
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.card-button strong,
+.angle-card strong {
+  color: #9b4d2c;
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+
+.pill {
+  background: #f1dfca;
+  border-radius: 999px;
+  color: #7f3d20;
+  display: inline-flex;
+  font-size: 0.72rem;
+  font-weight: 800;
+  justify-self: start;
+  padding: 0.32rem 0.62rem;
+}
+
+.source-link,
+.selected-source a {
+  border-top: 1px solid #eadccb;
+  color: #7f3d20;
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 800;
+  padding: 0.85rem 1rem;
+  text-decoration: none;
+}
+
+.source-link:hover,
+.selected-source a:hover {
+  background: #f7ecdf;
+}
+
+.card-next {
+  background: #173f43;
+  border: 0;
+  color: white;
+  font-weight: 800;
+  padding: 0.85rem 1rem;
+  text-align: left;
+}
+
+.card-next:hover {
+  background: #0d3033;
+}
+
+.selected-card {
+  border-color: #9b4d2c !important;
+  box-shadow: 0 0 0 3px rgba(155, 77, 44, 0.14);
+}
+
+.custom-box {
+  display: grid;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.angle-card,
+.hook-card,
+.style-card {
+  cursor: pointer;
+  display: grid;
+  gap: 0.7rem;
+  padding: 1rem;
+  text-align: left;
+  transition: 160ms ease;
+}
+
+.angle-card:hover,
+.hook-card:hover,
+.style-card:hover,
+.result-card:hover {
+  border-color: #b36b44;
+}
+
+.hook-card span {
+  color: #9b4d2c;
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.hook-card p {
+  color: #261b13;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+.style-card strong {
+  color: #261b13;
+  font-size: 0.96rem;
+}
+
+.style-card span {
+  color: #6d5b4a;
+  font-size: 0.84rem;
+  line-height: 1.45;
+}
+
+.agent-card {
+  background: #f2f8f7;
+  border: 1px solid #c8dcda;
+  border-radius: 10px;
+  display: grid;
+  gap: 0.5rem;
+  padding: 1rem;
+}
+
+.agent-card span,
+.formula-card > span {
+  color: #4b8b91;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+}
+
+.agent-card strong {
+  color: #173f43;
+  font-size: 1rem;
+}
+
+.agent-card p {
+  color: #64777a;
+  font-size: 0.86rem;
+  line-height: 1.5;
+}
+
+.choice-heading {
+  color: #173f43;
+  font-size: clamp(1.55rem, 2.5vw, 2.25rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.choice-sub {
+  color: #64777a;
+  margin-top: 0.25rem;
+}
+
+.formula-card {
+  background: #fff;
+  border: 1px solid #d6e3e2;
+  border-radius: 10px;
+  display: grid;
+  gap: 0.85rem;
+  min-height: 18rem;
+  padding: 1.5rem;
+  position: relative;
+  text-align: left;
+}
+
+.formula-card strong {
+  color: #173f43;
+  font-size: 1.35rem;
+}
+
+.formula-card p {
+  color: #64777a;
+  font-size: 0.97rem;
+  line-height: 1.65;
+}
+
+.formula-card b {
+  color: #355c60;
+  font-size: 0.84rem;
+  line-height: 1.5;
+}
+
+.formula-card em {
+  background: #1b7680;
+  border-radius: 999px;
+  color: white;
+  font-style: normal;
+  font-weight: 800;
+  padding: 0.4rem 0.7rem;
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+}
+
+.formula-card.selected-card {
+  background: #eff9f8;
+  border-color: #1b7680 !important;
+  box-shadow: 0 0 0 2px rgba(27, 118, 128, 0.1);
+}
+
+.email-choice-layout,
+.visual-creation-grid {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.email-choice-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.balanced-choice-list {
+  display: grid;
+  flex: 1;
+  gap: 0.85rem;
+  grid-auto-rows: 1fr;
+}
+
+.formula-card.compact,
+.style-card.expanded {
+  min-height: 13.5rem;
+}
+
+.formula-card.compact {
+  padding: 1.15rem;
+}
+
+.style-card.expanded {
+  align-content: start;
+  background: #fff;
+  padding: 1.25rem;
+}
+
+.style-card.expanded strong {
+  color: #173f43;
+  font-size: 1.15rem;
+}
+
+.style-card.expanded span {
+  font-size: 0.93rem;
+  line-height: 1.65;
+}
+
+.draft-box.publish-ready {
+  min-height: 52rem;
+}
+
+.visual-creation-card {
+  background: #f9fcfb;
+  border: 1px solid #d6e3e2;
+  border-radius: 12px;
+  display: grid;
+  gap: 1rem;
+  grid-template-rows: auto minmax(22rem, auto) auto auto;
+  padding: 1rem;
+}
+
+.visual-prompt-box {
+  background: #fffdf9;
+  border: 1px solid #d8c5b2;
+  border-radius: 8px;
+  color: #4e4238;
+  line-height: 1.55;
+  min-height: 22rem;
+  padding: 1rem;
+  resize: vertical;
+  width: 100%;
+}
+
+.generated-visual {
+  aspect-ratio: 1;
+  background: #efe9df;
+  border: 1px solid #d6e3e2;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.generated-visual img {
+  display: block;
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+.download-button {
+  align-items: center;
+  background: #173f43;
+  border-radius: 8px;
+  color: #fff;
+  display: flex;
+  font-weight: 800;
+  justify-content: center;
+  min-height: 3rem;
+  padding: 0.8rem 1rem;
+  text-decoration: none;
+}
+
+.download-button:hover {
+  background: #0d3033;
+}
+
+.channel-page {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.channel-tools {
+  align-items: stretch;
+  display: grid;
+  gap: 0.85rem;
+  grid-template-columns: minmax(0, 2fr) minmax(12rem, 1fr);
+}
+
+.channel-output .draft-box {
+  min-height: 46rem;
+}
+
+.format-toggle {
+  display: grid;
+  gap: 0.65rem;
+  grid-template-columns: 1fr 1fr;
+}
+
+.format-toggle button,
+.secondary-button {
+  background: white;
+  border: 1px solid #c8dcda;
+  border-radius: 8px;
+  color: #355c60;
+  font-weight: 800;
+  padding: 0.8rem 1rem;
+}
+
+.format-toggle button.active {
+  background: #173f43;
+  border-color: #173f43;
+  color: white;
+}
+
+.secondary-button {
+  width: 100%;
+}
+
+.page-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.angle-hook-layout {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.choice-column {
+  background: #f9fcfb;
+  border: 1px solid #d6e3e2;
+  border-radius: 12px;
+  padding: 1rem;
+}
+
+.column-heading {
+  border-bottom: 1px solid #d6e3e2;
+  margin-bottom: 1rem;
+  padding: 0.25rem 0.25rem 1rem;
+}
+
+.column-heading span {
+  color: #4b8b91;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+}
+
+.column-heading h3 {
+  color: #173f43;
+  font-size: 1.3rem;
+  font-weight: 800;
+  margin-top: 0.25rem;
+}
+
+.column-heading p {
+  color: #64777a;
+  font-size: 0.88rem;
+  margin-top: 0.25rem;
+}
+
+.angle-list,
+.hook-list {
+  flex: 1;
+  grid-auto-rows: 1fr;
+}
+
+.angle-choice-column,
+.hook-choice-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.angle-choice-column .angle-card {
+  gap: 0.45rem;
+  padding: 0.78rem 0.85rem;
+}
+
+.angle-choice-column .angle-card h3 {
+  font-size: 0.92rem;
+  line-height: 1.2;
+}
+
+.angle-choice-column .angle-card p {
+  font-size: 0.76rem;
+  line-height: 1.38;
+}
+
+.angle-choice-column .angle-card strong {
+  font-size: 0.68rem;
+  line-height: 1.35;
+}
+
+.hook-choice-column .hook-card {
+  min-height: 0;
+}
+
+@media (min-width: 1024px) {
+  .angle-hook-layout {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  .email-choice-layout,
+  .visual-creation-grid {
+    align-items: stretch;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .workflow-nav {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+}
+
+.selected-source {
+  display: grid;
+  gap: 0.45rem;
+  padding: 1rem;
+}
+
+.selected-source span,
+.chosen-strip span {
+  color: #9b4d2c;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.selected-source strong,
+.chosen-strip strong {
+  color: #261b13;
+  font-size: 0.96rem;
+  line-height: 1.45;
+}
+
+.selected-source a {
+  border: 0;
+  margin: 0.25rem -0.35rem -0.35rem;
+  padding: 0.5rem;
+}
+
+.chosen-strip {
+  display: grid;
+  gap: 0.4rem;
+  padding: 0.9rem 1rem;
+}
+
+.draft-box {
+  min-height: 44rem;
+  width: 100%;
+  resize: vertical;
+  border: 1px solid #d8c5b2;
+  border-radius: 8px;
+  background: #fffdf9;
+  color: #261b13;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1rem;
+  line-height: 1.68;
+  outline: none;
+  padding: 1rem;
+  white-space: pre-wrap;
+}
+
+.draft-box.visual {
+  min-height: 36rem;
+}
+
+@media (max-width: 720px) {
+  .section-title {
+    font-size: 1.8rem;
+  }
+
+  .draft-box {
+    min-height: 32rem;
+  }
+
+  .channel-tools {
+    grid-template-columns: 1fr;
+  }
+}
