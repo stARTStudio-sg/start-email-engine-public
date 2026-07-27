@@ -438,6 +438,71 @@ button:disabled {
   gap: 1.5rem;
 }
 
+.facebook-assets-grid {
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.facebook-asset-card {
+  background: #f9fcfb;
+  border: 1px solid #d6e3e2;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.facebook-prompt-area {
+  border-bottom: 1px solid #d6e3e2;
+  display: grid;
+  gap: 0.65rem;
+  padding: 1rem;
+}
+
+.facebook-prompt-area span {
+  color: #4b8b91;
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.facebook-prompt-area textarea {
+  background: #fffdf9;
+  border: 1px solid #d8c5b2;
+  border-radius: 8px;
+  color: #4e4034;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  min-height: 25rem;
+  padding: 0.85rem;
+  resize: vertical;
+  width: 100%;
+}
+
+.facebook-asset-preview {
+  align-items: center;
+  aspect-ratio: 1;
+  background: #efe6d8;
+  display: flex;
+  justify-content: center;
+  margin: 1rem;
+  overflow: hidden;
+}
+
+.facebook-asset-preview img {
+  display: block;
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+.facebook-asset-card .download-button {
+  margin: 0 1rem 1rem;
+  text-align: center;
+}
+
 .channel-tools {
   align-items: stretch;
   display: grid;
@@ -636,6 +701,10 @@ button:disabled {
   }
 
   .channel-tools {
+    grid-template-columns: 1fr;
+  }
+
+  .facebook-assets-grid {
     grid-template-columns: 1fr;
   }
 }

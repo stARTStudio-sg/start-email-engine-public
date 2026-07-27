@@ -445,6 +445,54 @@ Mood: relatable for tired parents, gentle humour, loving attention, expressive c
 Avoid: scary mood, guilt-heavy parenting tone, cluttered text-heavy layout, stock-photo feel.`;
 }
 
+function escapeXml(value: string) {
+  return value.replace(/[<>&'"]/g, (character) => ({
+    "<": "&lt;",
+    ">": "&gt;",
+    "&": "&amp;",
+    "'": "&apos;",
+    "\"": "&quot;",
+  })[character] ?? character);
+}
+
+function wrapAssetText(value: string, maxLength = 30) {
+  const words = value.replace(/\s+/g, " ").trim().split(" ");
+  const lines: string[] = [];
+  let line = "";
+  words.forEach((word) => {
+    if (`${line} ${word}`.trim().length > maxLength && line) {
+      lines.push(line);
+      line = word;
+    } else {
+      line = `${line} ${word}`.trim();
+    }
+  });
+  if (line) lines.push(line);
+  return lines.slice(0, 5);
+}
+
+function makeFacebookCardSvg(kind: "quote" | "carousel", hook: string, angle: string) {
+  const lines = wrapAssetText(kind === "quote" ? hook : angle, kind === "quote" ? 29 : 25);
+  const lineMarkup = lines
+    .map((line, index) => `<text x="110" y="${350 + index * 82}" fill="#173f43" font-family="Georgia, serif" font-size="${kind === "quote" ? 58 : 66}" font-weight="700">${escapeXml(line)}</text>`)
+    .join("");
+  const eyebrow = kind === "quote" ? "A GENTLE PARENTING REMINDER" : "A stART STUDIO REFLECTION";
+  const footer = kind === "quote" ? "Crafting Confidence, One Brushstroke at a Time." : "Swipe for a gentler way to see the moment  →";
+  const accent = kind === "quote" ? "#d8795d" : "#e0a342";
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" viewBox="0 0 1080 1080">
+    <rect width="1080" height="1080" rx="0" fill="#f8f1e6"/>
+    <circle cx="920" cy="150" r="180" fill="${accent}" opacity=".18"/>
+    <circle cx="120" cy="955" r="210" fill="#4b8b91" opacity=".14"/>
+    <path d="M820 240c65-62 142-23 142 49 0 88-142 154-142 154S678 377 678 289c0-72 77-111 142-49Z" fill="${accent}" opacity=".9"/>
+    <text x="110" y="150" fill="#9b4d2c" font-family="Arial, sans-serif" font-size="25" font-weight="700" letter-spacing="5">${eyebrow}</text>
+    ${lineMarkup}
+    <line x1="110" y1="870" x2="970" y2="870" stroke="#d8c5b2" stroke-width="3"/>
+    <text x="110" y="930" fill="#5b4939" font-family="Arial, sans-serif" font-size="27">${escapeXml(footer)}</text>
+    <text x="110" y="995" fill="#173f43" font-family="Arial, sans-serif" font-size="30" font-weight="800">stART Studio</text>
+  </svg>`;
+  return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+}
+
 export default function Home() {
   const [step, setStep] = useState(1);
   const [researchCommand, setResearchCommand] = useState("Research international news, viral social media posts, trending parenting concerns and parent worries. Find topics that can become a meaningful stART Studio main email and be repurposed across our social channels.");
@@ -521,6 +569,14 @@ ${visualPrompt}
 
 Animation direction: the parrot speaks with small lively gestures, painted colour marks gently appear, the sloth blinks and smiles, and the coffee gives off a soft curl of steam. Keep motion calm, expressive and loopable. No text or watermark.`,
     [visualPrompt]
+  );
+  const facebookQuoteAsset = useMemo(
+    () => makeFacebookCardSvg("quote", selectedHook, selectedAngle.title),
+    [selectedHook, selectedAngle.title]
+  );
+  const facebookCarouselAsset = useMemo(
+    () => makeFacebookCardSvg("carousel", selectedHook, selectedAngle.title),
+    [selectedHook, selectedAngle.title]
   );
   const facebookCompany = `FACEBOOK COMPANY POST
 
@@ -957,22 +1013,93 @@ Crafting Confidence, One Brushstroke at a Time.`;
 
           {step === 7 && (
             <div className="channel-page">
-              <div><p className="section-kicker">Page 7 · Facebook Asset Agent</p><h2 className="section-title">Create Facebook Asset</h2><p className="section-copy">Create a visual direction that works with the company post without repeating all the words in the caption.</p></div>
-              <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-                {["Editorial illustration", "Quote card", "Carousel", "Animated GIF"].map((item, index) => <button key={item} className={`style-card ${index === 0 ? "selected-card" : ""}`}><strong>{item}</strong><span>{index === 0 ? "Warm, human and story-led." : index === 1 ? "One memorable line with clear brand styling." : index === 2 ? "Five simple slides that unfold the insight." : "A short, expressive loop for extra attention."}</span></button>)}
+              <div><p className="section-kicker">Page 7 · Facebook Asset Agent</p><h2 className="section-title">Create Four Facebook Assets</h2><p className="section-copy">Each publish-ready direction has its own production prompt and a separate downloadable visual. Use one strong asset with the Facebook Company caption, or test different formats across future posts.</p></div>
+              <div className="facebook-assets-grid">
+                <article className="facebook-asset-card">
+                  <div className="facebook-prompt-area">
+                    <span>Asset 1 · Editorial Illustration</span>
+                    <textarea value={`Create a square 1080 × 1080 editorial illustration for a Facebook company post.
+
+Scene: A warm, expressive sloth parent sits on a cream sofa, visibly tired but lovingly attentive, while an excited colourful parrot child talks animatedly beside them.
+
+Action: Add many playful empty speech bubbles and hand-drawn action marks around the parrot to show rapid excited chatter. The sloth holds a warm drink, gently smiles and keeps listening.
+
+Message to express: ${selectedHook}
+Core direction: ${selectedAngle.frame}
+
+Style: textured hand-painted editorial illustration; warm cream, deep teal, gentle coral and mustard; emotionally safe, humorous and polished.
+Composition: clear focal point, generous breathing room, mobile-feed readability.
+Avoid: written words, logos, watermark, guilt, judgement, clutter or stock-photo styling.`} readOnly />
+                  </div>
+                  <div className="facebook-asset-preview"><img src={`${import.meta.env.BASE_URL}email-still.png`} alt="Facebook editorial illustration featuring a sloth parent and excited parrot child" /></div>
+                  <a className="download-button" href={`${import.meta.env.BASE_URL}email-still.png`} download="start-studio-facebook-editorial.png">Download editorial illustration</a>
+                </article>
+
+                <article className="facebook-asset-card">
+                  <div className="facebook-prompt-area">
+                    <span>Asset 2 · Branded Quote Card</span>
+                    <textarea value={`Create a square 1080 × 1080 branded quote card for stART Studio.
+
+Use this exact quote:
+"${selectedHook}"
+
+Design: Warm cream background, deep teal editorial typography, gentle coral heart-shaped accent, subtle teal and coral organic circles, generous margins and a fine divider near the footer.
+
+Footer:
+stART Studio
+Crafting Confidence, One Brushstroke at a Time.
+
+Feeling: thoughtful, calm, premium, emotionally safe and immediately readable on a phone.
+Avoid: photography, tiny type, crowded decoration, extra messaging, watermark or misspelled words.`} readOnly />
+                  </div>
+                  <div className="facebook-asset-preview"><img src={facebookQuoteAsset} alt="Publish-ready stART Studio Facebook quote card" /></div>
+                  <a className="download-button" href={facebookQuoteAsset} download="start-studio-facebook-quote-card.svg">Download quote card</a>
+                </article>
+
+                <article className="facebook-asset-card">
+                  <div className="facebook-prompt-area">
+                    <span>Asset 3 · Carousel Cover</span>
+                    <textarea value={`Create the cover of a five-slide square Facebook carousel, 1080 × 1080.
+
+Cover headline:
+"${selectedAngle.title}"
+
+Supporting cue:
+"Swipe for a gentler way to see the moment →"
+
+Visual system: warm cream background, deep teal headline, mustard and coral organic shapes, one friendly heart motif and elegant editorial spacing.
+
+The next four slides should unfold:
+1. The familiar parent struggle
+2. What may sit beneath the child's behaviour
+3. One belief shift
+4. One small action and a gentle stART Studio CTA
+
+Keep every slide concise, consistent, legible on mobile and ready for a professional Facebook company account.
+Avoid: dense paragraphs, inconsistent colours, stock icons, guilt or judgement.`} readOnly />
+                  </div>
+                  <div className="facebook-asset-preview"><img src={facebookCarouselAsset} alt="Publish-ready cover for a stART Studio Facebook carousel" /></div>
+                  <a className="download-button" href={facebookCarouselAsset} download="start-studio-facebook-carousel-cover.svg">Download carousel cover</a>
+                </article>
+
+                <article className="facebook-asset-card">
+                  <div className="facebook-prompt-area">
+                    <span>Asset 4 · Animated Facebook GIF</span>
+                    <textarea value={`Create a seamless 4–6 second square animated GIF for Facebook, based on the sloth parent and parrot child scene.
+
+Motion sequence: The colourful parrot child bounces gently, moves its wings and talks excitedly. Several empty speech bubbles pop up one after another with lively drawn action marks. The tired sloth parent blinks slowly, lifts the warm cup, then smiles. A soft curl of steam completes the loop.
+
+Message to express: ${selectedHook}
+Core direction: ${selectedAngle.frame}
+
+Style: textured hand-painted editorial animation; warm cream, deep teal, gentle coral and mustard; playful but not frantic.
+Technical: square 1080 × 1080, seamless loop, clear motion at small mobile size.
+Avoid: written text, flashing, abrupt cuts, logos, watermark, guilt or judgement.`} readOnly />
+                  </div>
+                  <div className="facebook-asset-preview"><img src={`${import.meta.env.BASE_URL}email-visual.gif`} alt="Animated Facebook visual featuring a sloth parent and parrot child" /></div>
+                  <a className="download-button" href={`${import.meta.env.BASE_URL}email-visual.gif`} download="start-studio-facebook-animated.gif">Download animated GIF</a>
+                </article>
               </div>
-              <label className="field channel-output"><span>Generated Facebook asset prompt</span><textarea className="draft-box visual" value={`FACEBOOK ASSET PROMPT
-
-Create a warm editorial illustration based on:
-${selectedHook}
-
-Core idea:
-${selectedAngle.frame}
-
-Format: square 1080 × 1080
-Brand feeling: thoughtful, hopeful, human and emotionally safe
-Palette: warm cream, deep teal and gentle coral
-Avoid: text-heavy design, stock-photo feeling, guilt or judgement`} readOnly /></label>
               <div className="page-actions"><button className="primary-button" onClick={() => setStep(8)}>Continue to Facebook Personal →</button></div>
             </div>
           )}
