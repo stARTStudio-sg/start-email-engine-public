@@ -745,9 +745,9 @@ Crafting Confidence, One Brushstroke at a Time.`;
   }
 
   return (
-    <main className="min-h-screen bg-[#f8f4ed] text-[#261b13]">
-      <section className="mx-auto flex min-h-screen w-full max-w-7xl flex-col px-4 py-5 sm:px-6 lg:px-8">
-        <header className="flex flex-col gap-4 border-b border-[#ddcdbb] pb-5 lg:flex-row lg:items-end lg:justify-between">
+    <main className="dashboard-root min-h-screen bg-[#f8f4ed] text-[#261b13]">
+      <section className="app-shell mx-auto flex min-h-screen w-full max-w-7xl flex-col px-4 py-5 sm:px-6 lg:px-8">
+        <header className="app-header flex flex-col gap-4 border-b border-[#ddcdbb] pb-5 lg:flex-row lg:items-end lg:justify-between">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#9b4d2c]">
               stART Studio
@@ -794,9 +794,9 @@ Crafting Confidence, One Brushstroke at a Time.`;
           ))}
         </nav>
 
-        <section className="flex-1 rounded-lg border border-[#ddcdbb] bg-white p-4 shadow-sm sm:p-6">
+        <section className="dashboard-page flex-1 rounded-lg border border-[#ddcdbb] bg-white p-4 shadow-sm sm:p-6">
           {step === 1 && (
-            <div className="space-y-6">
+            <div className="page-shell page-one space-y-6">
               <div className="grid gap-5 lg:grid-cols-[0.8fr_1.2fr]">
                 <div>
                 <p className="section-kicker">Page 1</p>
@@ -833,7 +833,7 @@ Crafting Confidence, One Brushstroke at a Time.`;
           )}
 
           {step === 2 && (
-            <div className="space-y-5">
+            <div className="page-shell page-two space-y-5">
               <div>
                 <p className="section-kicker">Page 2</p>
                 <h2 className="section-title">Browse Research Results</h2>
@@ -890,7 +890,7 @@ Crafting Confidence, One Brushstroke at a Time.`;
           )}
 
           {step === 3 && (
-            <div className="space-y-5">
+            <div className="page-shell page-three space-y-5">
               <div>
                 <p className="section-kicker">Page 3</p>
                 <h2 className="section-title">Choose Article Angle and Hook</h2>
@@ -929,7 +929,7 @@ Crafting Confidence, One Brushstroke at a Time.`;
           )}
 
           {step === 4 && (
-            <div className="space-y-7">
+            <div className="page-shell page-four space-y-7">
               <div>
                 <p className="section-kicker">Page 4 · Email Copy Agent</p>
                 <h2 className="section-title">Create the Main Email</h2>
@@ -986,7 +986,7 @@ Crafting Confidence, One Brushstroke at a Time.`;
           )}
 
           {step === 5 && (
-            <div className="space-y-6">
+            <div className="page-shell page-five space-y-6">
               <div><p className="section-kicker">Page 5 · Visual Creation</p><h2 className="section-title">Create Email Visual</h2><p className="section-copy">Use the still image or animated GIF with your main email. Both visual formats remain available together.</p></div>
               <label className="field"><span>Shared visual idea</span><textarea value={visualIdea} onChange={(event) => setVisualIdea(event.target.value)} rows={8} /></label>
               <div className="visual-creation-grid">
@@ -1012,7 +1012,7 @@ Crafting Confidence, One Brushstroke at a Time.`;
           )}
 
           {step === 7 && (
-            <div className="channel-page">
+            <div className="channel-page page-shell page-seven">
               <div><p className="section-kicker">Page 7 · Facebook Asset Agent</p><h2 className="section-title">Create Four Facebook Assets</h2><p className="section-copy">Each publish-ready direction has its own production prompt and a separate downloadable visual. Use one strong asset with the Facebook Company caption, or test different formats across future posts.</p></div>
               <div className="facebook-assets-grid">
                 <article className="facebook-asset-card">
@@ -1145,7 +1145,7 @@ function SelectedSource({ article }: { article: Article }) {
 function RepurposePage({ page, agent, title, description, content, nextLabel, onNext }: { page: string; agent: string; title: string; description: string; content: string; nextLabel: string; onNext: () => void }) {
   const [draft, setDraft] = useState(content);
   return (
-    <div className="channel-page">
+    <div className="channel-page page-shell repurpose-page">
       <div><p className="section-kicker">{page} · {agent}</p><h2 className="section-title">{title}</h2><p className="section-copy">{description}</p></div>
       <div className="channel-tools">
         <div className="chosen-strip"><span>Source email</span><strong>{content.split("\n")[0]}</strong></div>
