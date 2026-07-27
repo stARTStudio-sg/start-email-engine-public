@@ -10,3 +10,5 @@ private credentials or perform live AI research.
 ## Public website
 
 https://startstudio-sg.github.io/start-email-engine-public/
+
+The website is deployed automatically from the latest version of the `main` branch.
